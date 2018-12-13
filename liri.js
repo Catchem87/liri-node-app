@@ -14,12 +14,34 @@ var axois = require('axios');
 
 
 var command = process.argv[2];
-var input = process.argv.splice(3).join(' ');
+var input = process.argv.slice(3).join(' ');
+
+function movieThis() {
+    axois.get("http://www.omdbapi.com/?t=" + input + "&apikey=59cb00bb").then(
+        function(response) {
+            console.log(response.data);
+            var data = response.data;
+            console.log("Title: " + data.Title + "\nYear: " + data.Year + "\nIMDB Rating: " + data.imdbRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " + data.Actors);
+        },
+        function(error) {
+            if(error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if(error.request) {
+                console.log(error.request);
+            } else {
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        }
+    )
+};
 
 function concertThis() {
     axois.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=de3b2d5fb097c9be2422bde5146a2f8f").then(
         function(response) {
-            for(var i = 0; i < response.data.length; i++) {
+            for(var y = 0; y < response.data.length; y++) {
                 // console.log(response.data);
                 response.data.map(item => {
                     console.log('\nVenue Name: ' + item.venue.name + '\nVenue Location: ' + item.venue.city + ', ' + item.venue.country + '\nDate: ' + moment(item.datetime).format("MM/DD/YYYY") );
@@ -39,7 +61,7 @@ function concertThis() {
             console.log(error.config);
         }
     )
-}
+};
 
 
 
