@@ -3,15 +3,11 @@ require("dotenv").config();
 var fs = require('fs');
 var moment = require('moment');
 
-// fs.writeFile("random.txt")
-
 var keys = require("./keys.js");
 
 var Spotify = require('node-spotify-api');
 
 var axois = require('axios');
-
-
 
 var command = process.argv[2];
 var input = process.argv.slice(3).join(' ');
@@ -24,7 +20,7 @@ function movieThis() {
     axois.get("http://www.omdbapi.com/?t=" + input + "&apikey=59cb00bb").then(
         function (response) {
             var data = response.data;
-            console.log("Title: " + data.Title + "\nYear: " + data.Year + "\nIMDB Rating: " + data.imdbRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " + data.Actors);
+            console.log("\nTitle: " + data.Title + "\nYear: " + data.Year + "\nIMDB Rating: " + data.imdbRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " + data.Actors);
         },
         function (error) {
             if (error.response) {
@@ -86,7 +82,7 @@ function spotifyThisSong() {
         for (var i = 0; i < data.tracks.items.length; i++) {
             //console.log(data.tracks.items[i].artists);
             data.tracks.items[i].artists.map(track => {
-                console.log('Artist name: ' + track.name + '\nAlbum name: ' + data.tracks.items[i].album.name + '\nSong Title: ' + data.tracks.items[i].name + '\nSong Preview: ' + data.tracks.items[i].preview_url);
+                console.log('\nArtist name: ' + track.name + '\nAlbum name: ' + data.tracks.items[i].album.name + '\nSong Title: ' + data.tracks.items[i].name + '\nSong Preview: ' + data.tracks.items[i].preview_url);
             })
         }
     });
